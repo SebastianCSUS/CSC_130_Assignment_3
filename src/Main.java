@@ -52,6 +52,19 @@ class Node {
 
     public void add(int key, String value) {
 
+        if(this.key < key) {
+            if(this.right == null) {
+                this.right = new Node(key, value);
+                return;
+            }
+            this.right.add(key, value);
+        } else if(this.key > key) {
+            if(this.left == null) {
+                this.left = new Node(key, value);
+                return;
+            }
+            this.left.add(key, value);
+        }
     }
 
     public String find(int key) {
@@ -62,6 +75,8 @@ class Node {
 }
 
 class BinarySearchTree {
+    private Node root;
+
     public String about() {
         return "Author: Sebastian Jones";
     }
