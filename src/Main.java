@@ -1,7 +1,27 @@
+/** Assignment 3 - Binary Search Tree - 11/4/2021
+ *  Sebastian Jones - Sacramento State University - CSC 130 - Professor Cooke
+ */
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
+
+        BinarySearchTree tree = new BinarySearchTree();
+
+        tree.add(10, "Buffalo Wings");
+        tree.add(43, "Cheez Whiz");
+        tree.add(18, "Root beer");
+        tree.add(6, "Pringles");
+        tree.add(50, "Ice cream");
+        tree.add(8, "Chocolate");
+
+        tree.print();
+
+        System.out.print("Finding value of key 18: \t");
+        System.out.println(tree.find(18));
+        System.out.print("Finding value of key 8: \t");
+        System.out.println(tree.find(8));
+        System.out.print("Finding value of key 5: \t");
+        System.out.println(tree.find(5));
     }
 }
 
@@ -47,11 +67,21 @@ class Node {
 
     //Other functions
     public void print(int indent){
-
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < indent; i++) {
+            sb.append(" ");
+        }
+        sb.append("+--").append(this.getKey()).append(" - ").append(this.getValue());
+        System.out.println(sb);
+        if(this.getLeft() != null) {
+            this.getLeft().print(indent + 2);
+        }
+        if(this.getRight() != null) {
+            this.getRight().print(indent + 2);
+        }
     }
 
     public void add(int key, String value) {
-
         if(this.key < key) {
             if(this.right == null) {
                 this.right = new Node(key, value);
@@ -68,12 +98,18 @@ class Node {
     }
 
     public String find(int key) {
-        String returnVal = null;
-
-        return returnVal;
+        if(this.getKey() < key) {
+            if(this.getRight()==null) { return null;}
+            return this.getRight().find(key);
+        } else if(this.getKey() > key) {
+            if(this.getLeft()==null) {return null;}
+            return this.getLeft().find(key);
+        }
+        return this.getValue();
     }
 }
 
+//Uses the root value to begin recursion
 class BinarySearchTree {
     private Node root;
 
@@ -82,16 +118,18 @@ class BinarySearchTree {
     }
 
     public void print() {
-
+        root.print(0);
     }
 
     public void add(int key, String value) {
-
+        if(root == null) {
+            root = new Node(key, value);
+            return;
+        }
+        root.add(key, value);
     }
 
     public String find(int key) {
-        String returnVal = null;
-
-        return returnVal;
+        return root.find(key);
     }
 }
